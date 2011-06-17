@@ -27,10 +27,7 @@ class MWrap(object):
         return is_del 
 
     def get(self, key):
-        is_get = memcache.get(key)
-        if not is_get:
-            logging.error('MEMFAIL get %s' % key)
-        return is_get 
+        return memcache.get(key)
 
 
 class Cache(webapp.RequestHandler):
@@ -64,12 +61,12 @@ class Cache(webapp.RequestHandler):
         return json.dumps(formatted_data)
 
     def get(self):
-        c = MWrap()
+        m = MWrap()
         data = None
-        data = c.get(self.line)
+        data = m.get(self.line)
         if not data:
             data = self.format_line(self.fetch_line(self.line))
-            c.set(self.line, data)
+            m.set(self.line, data)
         self.response.headers['Content-Type'] = 'text/json'
         self.response.out.write(data)
         
