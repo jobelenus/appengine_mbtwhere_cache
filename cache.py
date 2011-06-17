@@ -55,7 +55,7 @@ class Cache(webapp.RequestHandler):
                 new_row[key] = value
             formatted_data.append(new_row)
         if warn:
-            pass #TODO: something
+            logging.error('MBTA Json Formatting Has Changed!')
         return json.dumps(formatted_data)
 
     def get(self):
