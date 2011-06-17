@@ -5,6 +5,7 @@ import urllib
 import logging
 import json
 
+logging.getLogger().setLevel(logging.ERROR)
 
 class MWrap(object):
     DEFAULT_TIMEOUT = 60 #1 min cache timeout
