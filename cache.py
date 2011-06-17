@@ -3,7 +3,11 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.api import memcache
 import urllib
 import logging
-import json
+
+try:
+    import json
+except ImportError:
+    from django.utils import simplejson as json
 
 logging.getLogger().setLevel(logging.ERROR)
 
