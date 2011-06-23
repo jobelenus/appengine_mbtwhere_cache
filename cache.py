@@ -69,8 +69,7 @@ class Cache(webapp.RequestHandler):
             m.set(self.line, data)
         self.response.headers['Content-Type'] = 'text/json'
         self.response.out.write(data)
-        
-        
+
 
 class RedLine(Cache):
     line = 'red'
@@ -78,10 +77,33 @@ class OrangeLine(Cache):
     line = 'orange'
 class BlueLine(Cache):
     line = 'blue'
+        
+        
+class Service(Cache):
+    LINES = {
+        's-red': 'http://talerts.com/rssfeed/alertsrss.aspx?15',
+        's-orange': 'http://talerts.com/rssfeed/alertsrss.aspx?16',
+        's-blue': 'http://talerts.com/rssfeed/alertsrss.aspx?18',
+        's-green': 'http://talerts.com/rssfeed/alertsrss.aspx?17'
+    }
+
+    def format_line(self, data):
+        return data # it's all xml, don't touch it
+
+
+class RedService(Service):
+    line = 's-red'
+class BlueService(Service):
+    line = 's-blue'
+class OrangeService(Service):
+    line = 's-orange'
+class GreenService(Service):
+    lines = 's-green'
 
 
 application = webapp.WSGIApplication(
-    [('/line/red/', RedLine), ('/line/blue/', BlueLine), ('/line/orange/', OrangeLine)],
+    [('/line/red/', RedLine), ('/line/blue/', BlueLine), ('/line/orange/', OrangeLine),
+    ('/service/red/', RedService), ('/service/blue/', BlueService), ('/service/orange/', OrangeService), ('/service/green/', GreenService)],
     debug=True)
 
 def main():
